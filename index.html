@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPDC–2 Exam Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --border: #e8e5df;
+    --text: #1a1917;
+    --muted: #706e69;
+    --accent: #1a6b4a;
+    --accent-light: #e8f5ef;
+    --danger: #c0392b;
+    --danger-light: #fdf0ef;
+    --warning: #b7791f;
+    --warning-light: #fef9ec;
+    --ink: #2d2d2b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ── WELCOME ── */
+  #welcome {
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .logo-mark {
+    width: 56px; height: 56px;
+    background: var(--accent);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2rem;
+    font-family: 'DM Serif Display', serif;
+    color: #fff;
+    font-size: 22px;
+    letter-spacing: -1px;
+  }
+
+  .welcome-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .welcome-sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .stat-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .stat-pill strong { color: var(--text); }
+
+  .section-cards {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-tag {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.75rem 1.25rem;
+    text-align: left;
+    min-width: 140px;
+  }
+
+  .section-tag .tag-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .section-tag .tag-name { font-size: 0.9rem; font-weight: 500; }
+  .section-tag .tag-detail { font-size: 0.8rem; color: var(--muted); }
+
+  .btn-start {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 3rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-start:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-start:active { transform: scale(0.98); }
+
+  /* ── EXAM ── */
+  #exam { flex-direction: column; }
+
+  .exam-header {
+    position: sticky;
+    top: 0;
+    background: rgba(248,247,244,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 1rem; }
+
+  .q-counter {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+
+  .section-badge {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    letter-spacing: 0.03em;
+  }
+
+  .progress-wrap {
+    flex: 1;
+    max-width: 220px;
+    margin: 0 1.5rem;
+  }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  .progress-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 3px;
+  }
+
+  .btn-submit-header {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 0.4rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-submit-header:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── QUESTION AREA ── */
+  .question-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem 2rem 1.5rem;
+    max-width: 640px;
+    width: 100%;
+    animation: slideIn 0.25s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .q-num {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .q-lecture {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .q-marks {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  .q-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+    font-weight: 400;
+  }
+
+  /* OPTIONS */
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    width: 100%;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    transform: translateX(2px);
+  }
+
+  .option-btn:active:not(:disabled) { transform: scale(0.99); }
+
+  .option-btn.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .option-btn.correct {
+    border-color: #2e7d32;
+    background: #f1f8f1;
+  }
+
+  .option-btn.wrong {
+    border-color: var(--danger);
+    background: var(--danger-light);
+  }
+
+  .option-btn.missed {
+    border-color: #2e7d32;
+    background: #f1f8f1;
+    opacity: 0.7;
+  }
+
+  .option-indicator {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .option-btn.selected .option-indicator,
+  .option-btn.correct .option-indicator {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .option-btn.wrong .option-indicator {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
+  }
+
+  /* NAVIGATION */
+  .q-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 640px;
+    width: 100%;
+    margin-top: 1.25rem;
+  }
+
+  .btn-nav {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.6rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--text);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .btn-nav:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-nav:disabled { opacity: 0.35; cursor: default; }
+
+  .btn-finish {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.6rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .btn-finish:hover { opacity: 0.85; }
+
+  /* ── QUESTION DOTS PANEL ── */
+  .dots-panel {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 0.6rem 1rem;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    max-width: min(640px, 92vw);
+    justify-content: center;
+    z-index: 20;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+
+  .dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    font-size: 0.6rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.12s;
+  }
+
+  .dot:hover { border-color: var(--accent); }
+  .dot.answered { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+  .dot.current { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ── RESULTS ── */
+  #results {
+    align-items: center;
+    padding: 2rem 1.5rem 5rem;
+  }
+
+  .results-inner { max-width: 680px; width: 100%; }
+
+  .results-hero {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .score-ring-wrap {
+    margin: 0 auto 1.5rem;
+    width: 140px;
+    height: 140px;
+    position: relative;
+  }
+
+  .score-ring-wrap svg { transform: rotate(-90deg); }
+
+  .score-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-pct {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .score-label { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+  .results-grade {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .results-msg { color: var(--muted); font-size: 0.9rem; }
+
+  /* SUMMARY GRID */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .sum-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    text-align: center;
+  }
+
+  .sum-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .sum-lbl { font-size: 0.78rem; color: var(--muted); }
+  .sum-card.green .sum-val { color: var(--accent); }
+  .sum-card.red .sum-val { color: var(--danger); }
+  .sum-card.amber .sum-val { color: var(--warning); }
+  .sum-card.blue .sum-val { color: #1a5fa8; }
+
+  /* SECTION BREAKDOWN */
+  .breakdown {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .breakdown-title {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .breakdown-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .breakdown-row:last-child { margin-bottom: 0; }
+
+  .bd-label { font-size: 0.85rem; min-width: 80px; }
+
+  .bd-bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: var(--bg);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bd-bar { height: 100%; border-radius: 4px; transition: width 0.8s ease 0.3s; }
+  .bd-bar.a-color { background: var(--accent); }
+  .bd-bar.b-color { background: #1a5fa8; }
+  .bd-bar.c-color { background: #9b59b6; }
+
+  .bd-score { font-size: 0.82rem; font-weight: 500; min-width: 60px; text-align: right; color: var(--muted); }
+
+  /* REVIEW */
+  .review-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.35rem 0.85rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.12s;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .review-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.15rem 1.25rem;
+    margin-bottom: 0.75rem;
+    border-left-width: 3px;
+  }
+
+  .review-item.correct-item { border-left-color: var(--accent); }
+  .review-item.wrong-item { border-left-color: var(--danger); }
+  .review-item.skipped-item { border-left-color: var(--warning); }
+
+  .ri-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .ri-q { font-size: 0.9rem; line-height: 1.5; flex: 1; color: var(--ink); }
+  .ri-badge { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 6px; white-space: nowrap; font-weight: 500; flex-shrink: 0; }
+  .ri-badge.c { background: var(--accent-light); color: var(--accent); }
+  .ri-badge.w { background: var(--danger-light); color: var(--danger); }
+  .ri-badge.s { background: var(--warning-light); color: var(--warning); }
+
+  .ri-answers { font-size: 0.82rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
+  .ri-ans-correct { color: var(--accent); font-weight: 500; }
+  .ri-ans-wrong { color: var(--danger); }
+
+  .action-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-action {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.65rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--text);
+    transition: all 0.15s;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .btn-action:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .btn-action.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-action.primary:hover { opacity: 0.85; }
+
+  /* UTILITIES */
+  .hidden { display: none !important; }
+
+  @media (max-width: 500px) {
+    .exam-header { flex-wrap: wrap; gap: 0.5rem; }
+    .progress-wrap { max-width: 100px; }
+    .q-card { padding: 1.25rem; }
+    .dots-panel { bottom: 0.5rem; padding: 0.5rem 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- WELCOME SCREEN -->
+<div id="welcome" class="screen active">
+  <div class="logo-mark">ip</div>
+  <h1 class="welcome-title">IPDC–2<br><em>Question Bank</em></h1>
+  <p class="welcome-sub">Lectures 16 to 30 · 130 questions across three sections</p>
+
+  <div class="stats-row">
+    <span class="stat-pill"><strong>130</strong> questions</span>
+    <span class="stat-pill"><strong>250</strong> total marks</span>
+    <span class="stat-pill"><strong>3</strong> sections</span>
+  </div>
+
+  <div class="section-cards">
+    <div class="section-tag">
+      <div class="tag-label">Section A</div>
+      <div class="tag-name">True / False</div>
+      <div class="tag-detail">Q1–50 · 1 mark each</div>
+    </div>
+    <div class="section-tag">
+      <div class="tag-label">Section B</div>
+      <div class="tag-name">MCQ — Recall</div>
+      <div class="tag-detail">Q51–100 · 2 marks each</div>
+    </div>
+    <div class="section-tag">
+      <div class="tag-label">Section C</div>
+      <div class="tag-name">MCQ — Apply</div>
+      <div class="tag-detail">Q101–130 · 2 marks (best), 1 mark (secondary)</div>
+    </div>
+  </div>
+
+  <button class="btn-start" onclick="startExam()">Begin Exam</button>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam" class="screen">
+  <header class="exam-header">
+    <div class="header-left">
+      <span class="q-counter" id="headerQ">Q1</span>
+      <span class="section-badge" id="headerSection">Section A</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 130</div>
+    </div>
+    <button class="btn-submit-header" onclick="confirmSubmit()">Finish</button>
+  </header>
+
+  <div class="question-area" id="questionArea">
+    <!-- injected -->
+  </div>
+
+  <div class="dots-panel" id="dotsPanel">
+    <!-- injected -->
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="results" class="screen">
+  <div class="results-inner">
+
+    <div class="results-hero">
+      <div class="score-ring-wrap">
+        <svg viewBox="0 0 140 140" width="140" height="140">
+          <circle cx="70" cy="70" r="58" fill="none" stroke="#e8e5df" stroke-width="9"/>
+          <circle cx="70" cy="70" r="58" fill="none" stroke="#1a6b4a" stroke-width="9"
+            stroke-linecap="round" stroke-dasharray="364" stroke-dashoffset="364"
+            id="ringCircle" style="transition: stroke-dashoffset 1.2s ease 0.3s"/>
+        </svg>
+        <div class="score-center">
+          <div class="score-pct" id="scorePct">0%</div>
+          <div class="score-label">score</div>
+        </div>
+      </div>
+      <div class="results-grade" id="resultsGrade">—</div>
+      <div class="results-msg" id="resultsMsg"></div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="sum-card green"><div class="sum-val" id="sumCorrect">0</div><div class="sum-lbl">Correct</div></div>
+      <div class="sum-card red"><div class="sum-val" id="sumWrong">0</div><div class="sum-lbl">Wrong</div></div>
+      <div class="sum-card amber"><div class="sum-val" id="sumSkipped">0</div><div class="sum-lbl">Skipped</div></div>
+      <div class="sum-card blue"><div class="sum-val" id="sumTotal">0</div><div class="sum-lbl">Marks / 250</div></div>
+    </div>
+
+    <div class="breakdown">
+      <div class="breakdown-title">Section breakdown</div>
+      <div class="breakdown-row">
+        <span class="bd-label">Section A</span>
+        <div class="bd-bar-wrap"><div class="bd-bar a-color" id="bdBarA" style="width:0%"></div></div>
+        <span class="bd-score" id="bdScoreA">0 / 50</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="bd-label">Section B</span>
+        <div class="bd-bar-wrap"><div class="bd-bar b-color" id="bdBarB" style="width:0%"></div></div>
+        <span class="bd-score" id="bdScoreB">0 / 100</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="bd-label">Section C</span>
+        <div class="bd-bar-wrap"><div class="bd-bar c-color" id="bdBarC" style="width:0%"></div></div>
+        <span class="bd-score" id="bdScoreC">0 / 100</span>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-action primary" onclick="startExam()">Retake Exam</button>
+      <button class="btn-action" onclick="scrollToReview()">Review Answers</button>
+    </div>
+
+    <div class="review-title">Answer Review</div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="setFilter('all', this)">All (130)</button>
+      <button class="filter-btn" onclick="setFilter('wrong', this)">Wrong</button>
+      <button class="filter-btn" onclick="setFilter('correct', this)">Correct</button>
+      <button class="filter-btn" onclick="setFilter('skipped', this)">Skipped</button>
+    </div>
+    <div id="reviewList"></div>
+
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  // ── SECTION A: True/False (Q1–50, 1 mark each) ──
+  {id:1,sec:'A',lecture:16,text:"When you live a life without any direction, you will not move far in any one direction.",opts:["True","False"],ans:0},
+  {id:2,sec:'A',lecture:16,text:"To achieve your long-term goals, you need to create smaller short-term goals to guide your life in the right direction.",opts:["True","False"],ans:0},
+  {id:3,sec:'A',lecture:16,text:"The more you visualize your long-term goals, the fewer chances there are of achieving them.",opts:["True","False"],ans:1},
+  {id:4,sec:'A',lecture:16,text:"Short term goals should be time-bound.",opts:["True","False"],ans:0},
+  {id:5,sec:'A',lecture:16,text:"Clear goals will give our lives a clear direction.",opts:["True","False"],ans:0},
+  {id:6,sec:'A',lecture:17,text:"There is no risk of addiction when smoking cigarettes occasionally to please one's friends.",opts:["True","False"],ans:1},
+  {id:7,sec:'A',lecture:17,text:"Drinking alcohol is only harmful to the health of the elderly but not to the youth.",opts:["True","False"],ans:1},
+  {id:8,sec:'A',lecture:17,text:"It is our duty to kindly encourage our family members to give up their bad addictions.",opts:["True","False"],ans:0},
+  {id:9,sec:'A',lecture:18,text:"Seva should be performed with compassion.",opts:["True","False"],ans:0},
+  {id:10,sec:'A',lecture:18,text:"Being generous can make us happier.",opts:["True","False"],ans:0},
+  {id:11,sec:'A',lecture:18,text:"Seva should be performed with the expectation of a reward.",opts:["True","False"],ans:1},
+  {id:12,sec:'A',lecture:19,text:"Working in a team helps you gain new perspectives.",opts:["True","False"],ans:0},
+  {id:13,sec:'A',lecture:19,text:"We should learn to be adaptable when working in a team.",opts:["True","False"],ans:0},
+  {id:14,sec:'A',lecture:19,text:"The biggest role of a team member is to take credit for the team's success.",opts:["True","False"],ans:1},
+  {id:15,sec:'A',lecture:19,text:"A good team member is willing to sacrifice something for the team.",opts:["True","False"],ans:0},
+  {id:16,sec:'A',lecture:21,text:"Legends create everlasting impressions.",opts:["True","False"],ans:0},
+  {id:17,sec:'A',lecture:21,text:"It is possible to lead with humility.",opts:["True","False"],ans:0},
+  {id:18,sec:'A',lecture:21,text:"The most effective way to lead is by making workers feel inferior.",opts:["True","False"],ans:1},
+  {id:19,sec:'A',lecture:21,text:"An aggressive leadership style is generally the most effective.",opts:["True","False"],ans:1},
+  {id:20,sec:'A',lecture:22,text:"A country without value-based citizens can create an environment of crime and corruption.",opts:["True","False"],ans:0},
+  {id:21,sec:'A',lecture:22,text:"To become value-based citizens, we must learn asset valuation techniques.",opts:["True","False"],ans:1},
+  {id:22,sec:'A',lecture:22,text:"Moral values are a universal necessity.",opts:["True","False"],ans:0},
+  {id:23,sec:'A',lecture:22,text:"Unfair treatment promotes a productive environment.",opts:["True","False"],ans:1},
+  {id:24,sec:'A',lecture:22,text:"We should always be accountable for our actions and be honest with the people who are depending on us.",opts:["True","False"],ans:0},
+  {id:25,sec:'A',lecture:23,text:"By completing the small things sincerely, it encourages you to do the big things better.",opts:["True","False"],ans:0},
+  {id:26,sec:'A',lecture:23,text:"Focus on perfecting only the big things. The small things are not as important.",opts:["True","False"],ans:1},
+  {id:27,sec:'A',lecture:23,text:"Good character is essential in our personal lives, but not in the workplace.",opts:["True","False"],ans:1},
+  {id:28,sec:'A',lecture:23,text:"It is possible for a person to bring change in his/her attitude.",opts:["True","False"],ans:0},
+  {id:29,sec:'A',lecture:23,text:"Being punctual in the workplace is unimportant.",opts:["True","False"],ans:1},
+  {id:30,sec:'A',lecture:24,text:"Death can teach us about life.",opts:["True","False"],ans:0},
+  {id:31,sec:'A',lecture:24,text:"Whatever happens, happens for the worst.",opts:["True","False"],ans:1},
+  {id:32,sec:'A',lecture:24,text:"Realizing our lifespan as finite can allow us to become more productive.",opts:["True","False"],ans:0},
+  {id:33,sec:'A',lecture:25,text:"Forgiveness can release us from the burden of regret and guilt. It can bring peace to our minds.",opts:["True","False"],ans:0},
+  {id:34,sec:'A',lecture:25,text:"Asking for forgiveness is an act of a coward.",opts:["True","False"],ans:1},
+  {id:35,sec:'A',lecture:25,text:"Ask for forgiveness because relationships are more important than our ego.",opts:["True","False"],ans:0},
+  {id:36,sec:'A',lecture:25,text:"Failure makes a person become worthless.",opts:["True","False"],ans:1},
+  {id:37,sec:'A',lecture:26,text:"Stress is a physical reaction to a mental state.",opts:["True","False"],ans:0},
+  {id:38,sec:'A',lecture:26,text:"Children are not affected by stress.",opts:["True","False"],ans:1},
+  {id:39,sec:'A',lecture:26,text:"Stress affects our health.",opts:["True","False"],ans:0},
+  {id:40,sec:'A',lecture:26,text:"Our eating habits can affect stress levels.",opts:["True","False"],ans:0},
+  {id:41,sec:'A',lecture:27,text:"We should limit the number of sugary drinks we drink.",opts:["True","False"],ans:0},
+  {id:42,sec:'A',lecture:27,text:"Physical exercise can reduce stress levels.",opts:["True","False"],ans:0},
+  {id:43,sec:'A',lecture:27,text:"The recommended amount of moderate physical exercise is 100 minutes per week.",opts:["True","False"],ans:1},
+  {id:44,sec:'A',lecture:27,text:"Most health professionals say that it is ideal to get 6 hours of sleep every night.",opts:["True","False"],ans:1},
+  {id:45,sec:'A',lecture:27,text:"Physical exercise impacts our mental wellbeing.",opts:["True","False"],ans:0},
+  {id:46,sec:'A',lecture:29,text:"Financial planning can help one move abroad or buy a house.",opts:["True","False"],ans:0},
+  {id:47,sec:'A',lecture:29,text:"A mid-term financial goal cannot be achieved straight away but should only take a few years to achieve.",opts:["True","False"],ans:0},
+  {id:48,sec:'A',lecture:29,text:"Compounding is a process of growing.",opts:["True","False"],ans:0},
+  {id:49,sec:'A',lecture:30,text:"The company we keep has little influence on our development and decisions.",opts:["True","False"],ans:1},
+  {id:50,sec:'A',lecture:30,text:"The company you keep has the potential to make you or break you.",opts:["True","False"],ans:0},
+
+  // ── SECTION B: MCQ Recall (Q51–100, 2 marks each) ──
+  {id:51,sec:'B',lecture:16,text:'What is the meaning of "begin with the end in mind"?',opts:["You should end the task while remembering the start point","You should envision where you want to be in future and structure your life now to give direction to reach your goal","You should begin the task and later plan to end it depending on your initial progress","You should imagine how you want to begin the task before starting"],ans:1},
+  {id:52,sec:'B',lecture:16,text:'"One should analyse oneself continually, introspect and think that ..."',opts:["How can I get people to like me more?","I have enough time to do this task later.","This is still to be done, and what have I come to do, and what is happening?","What is the point of doing anything when one must die one day?"],ans:2},
+  {id:53,sec:'B',lecture:16,text:"What is the first step to begin with the end in mind?",opts:["Create good daily routines","Prepare short-term goals","Calculate your risk-outcome ratio","Visualize your long-term goal"],ans:3},
+  {id:54,sec:'B',lecture:16,text:"Short term goals should be...?",opts:["vague","not be time-bound","relevant to your long-term goal","hard to achieve"],ans:2},
+  {id:55,sec:'B',lecture:16,text:'What does "S" stand for in the "SMART" method (used to define short-term goals)?',opts:["Specific","Standard","Superb","Simple"],ans:0},
+  {id:56,sec:'B',lecture:16,text:"Complete this sentence: To achieve your short-term goal...",opts:["You should not work in time-limits","Your daily routine should include activities that help to achieve it","Do the same thing that your friends do","You should avoid focussing on your daily habits"],ans:1},
+  {id:57,sec:'B',lecture:17,text:"Drug addictions can negatively impact which of the following?",opts:["Health","Wealth","Family","All the above"],ans:3},
+  {id:58,sec:'B',lecture:17,text:"Which of the following is the least likely reason for the formation of drug addiction?",opts:["Peer pressure","The search for an escape from stress","Curiosity","The desire to form an addiction"],ans:3},
+  {id:59,sec:'B',lecture:17,text:"Which of these methods can help an addict overcome their addictions?",opts:["Firmly decide to give up","Reject assistance","Deny accountability","All the above"],ans:0},
+  {id:60,sec:'B',lecture:17,text:"According to the statistics presented in the IPDC workbook, how many adult smokers began before the age of 18?",opts:["3/10","5/10","7/10","9/10"],ans:3},
+  {id:61,sec:'B',lecture:17,text:"What was the fate of the shining star Devashish Ghosh?",opts:["He is currently working at NASA, even though he had initially declined their offer","He is working for ISRO since he declined NASA's offer to serve his country","He is working on aerospace research for Lockheed Martin","He is working at a clothing processing factory in Ahmedabad"],ans:3},
+  {id:62,sec:'B',lecture:17,text:"How does the 'cool factor' play a role in recreational drugs (e.g. cigarettes, alcohol)?",opts:["One will borrow money from their family to buy recreational drugs","One will use recreational drugs out of curiosity","One will start to use recreational drugs to improve concentration levels","One will use recreational drugs because of the belief that it improves one's social status"],ans:3},
+  {id:63,sec:'B',lecture:18,text:"Which one of the following services were NOT provided to the victims of the Gujarat earthquake in Bhuj?",opts:["Postcards","Mobile phones","Psychological Trauma Centre","Last rites for the deceased"],ans:1},
+  {id:64,sec:'B',lecture:18,text:"How did Carl Joss, a reporter from the Swiss magazine Sonntagsblick, describe his experience after performing seva in the Gujarat Earthquake relief camp?",opts:['"The best birthday gift that anyone could have given me"','"It was a very memorable experience for me"','"Tiring but definitely worthwhile"','"It was hard to see the people suffering"'],ans:0},
+  {id:65,sec:'B',lecture:18,text:"Which of the following seva did the journalist, Carl Joss, NOT perform during the relief work of the Gujarat earthquake?",opts:["Cutting vegetables","Serving food","Donating money","Driving the ambulance"],ans:3},
+  {id:66,sec:'B',lecture:19,text:"Norgay and Hillary were able to successfully climb Mount Everest. What factor allowed them to do this while their predecessors could not?",opts:["They took permission of the government","They were experienced in mountaineering","They were part of a team that worked selflessly","There was no disappointment in their team"],ans:2},
+  {id:67,sec:'B',lecture:19,text:"Which of the following is NOT a characteristic of a good team player?",opts:["Selflessness","Respect","Half-heartedness","Adaptability"],ans:2},
+  {id:68,sec:'B',lecture:19,text:"How did Tenzing Norgay climb Mount Everest?",opts:["With unselfish teamwork","With agility and recklessness","By trying to get ahead on his own","With persistent fast speed"],ans:0},
+  {id:69,sec:'B',lecture:19,text:"Which of the following does NOT contribute to being a good team player?",opts:["Sacrifice","Value each team member","Make sure to claim your credit","Learn to change, change to learn"],ans:2},
+  {id:70,sec:'B',lecture:21,text:"What standard did Pramukh Swami Maharaj study until?",opts:["6th standard","12th standard","10th standard","Bachelor's degree"],ans:0},
+  {id:71,sec:'B',lecture:21,text:"What was the first thing that Pramukh Swami Maharaj did, after being appointed as the president of BAPS, in 1950?",opts:["Take a selfie","Delegate work to people","Wash dishes and utensils","Travel overseas"],ans:2},
+  {id:72,sec:'B',lecture:21,text:"What did Anjali Ahuja do every Wednesday?",opts:["Take a nap","Meet with her mentor to review her progress","Serve the employees lunch","Evaluate everyone's wages"],ans:2},
+  {id:73,sec:'B',lecture:21,text:"Pramukh Swami Maharaj reacted to the workers' refusal to continue the construction by doing what?",opts:["Lifting tiles","Serving tea","Giving a discourse","Scolding them"],ans:0},
+  {id:74,sec:'B',lecture:23,text:"Who supported Mahatma Gandhi as his personal secretary for 25 years?",opts:["Vallabhbhai Patel","Vithalbhai Patel","Mahadev Desai","V. P. Menon"],ans:2},
+  {id:75,sec:'B',lecture:23,text:"As per the IPDC workbook, what is NOT one of the ways to bring a positive change in your perception?",opts:["Make others feel your importance","Don't Understand Small Things to be Small","Look at the Bigger Picture","None of the above"],ans:0},
+  {id:76,sec:'B',lecture:23,text:"__________ is to complete a required task or fulfil an obligation, before or at a previously decided time.",opts:["Loyalty","Sincerity","Punctuality","Honesty"],ans:2},
+  {id:77,sec:'B',lecture:23,text:"How did Mahadev Desai win the complete trust of Mahatma Gandhi?",opts:["By being loyal","By being sincere in his work","By being punctual in all his duties","All of the above"],ans:3},
+  {id:78,sec:'B',lecture:23,text:"How did Walt Disney bring a change in the attitude of his employees at Disneyland?",opts:["He doubled the salary of all the employees.","He gave them a new perspective in which to view their role.","He hired motivational speakers to inspire his employees","He increased paid leaves for the employees."],ans:1},
+  {id:79,sec:'B',lecture:23,text:'What was the reply from the sweeper at NASA when President John F. Kennedy asked him about his job?',opts:['"I\'m helping put a man on the moon."','"I keep the NASA premises clean."','"There is no significant contribution from me in NASA\'s success."','"I clean the instruments to be used for NASA\'s moon mission."'],ans:0},
+  {id:80,sec:'B',lecture:24,text:"Reminding ourselves that 'life is finite' can benefit us in many ways. Which of the following are NOT one of those ways?",opts:["It can make our life more meaningful","It can make us more productive","It can increase our lifespan","It can give us clarity"],ans:2},
+  {id:81,sec:'B',lecture:24,text:"Which of the following are NOT one of the powerful thoughts explored in the lecture - 'Timeless Wisdom for Daily Life'?",opts:["Live every day as if it were your last","Look beyond the body","Whatever happens, happens for the best","When the going gets tough, the tough get going"],ans:3},
+  {id:82,sec:'B',lecture:24,text:"Which one of the following famous personalities received a cancer diagnosis from which they learnt to understand life as finite and encouraged them to create the most iconic technological advantages in the 21st century?",opts:["Bill Gates","Steve Jobs","Sundar Pichai","Mark Zuckerberg"],ans:1},
+  {id:83,sec:'B',lecture:25,text:"How did Raj react to his father when he gave him a Bhagwat Gita instead of the car he asked for?",opts:["He never spoke to his father again","He told his friend to buy him the car instead","He asked for an explanation","He moved to Japan and lived there"],ans:0},
+  {id:84,sec:'B',lecture:25,text:"According to the workbook, which of the following is NOT one of the 6 important tips when asking for forgiveness?",opts:["Apologize","Make excuses","Show empathy","Trying to make things right"],ans:1},
+  {id:85,sec:'B',lecture:25,text:"According to the workbook, which of the following is NOT part of the process of forgiving?",opts:["Consider why you want to forgive this person","Choose to forgive","Think of the person's flaws and share them with others","When in doubt, take your time"],ans:2},
+  {id:86,sec:'B',lecture:25,text:"Asking for forgiveness is an act of the __________.",opts:["Courageous","Weak","Foolish","Shy"],ans:0},
+  {id:87,sec:'B',lecture:25,text:"After forgiving someone, what should we do next? Answer according to the lecture.",opts:["Remind them of their mistake","Tell others about their mistake","Forget their mistake and move on","Tell them to write a letter of apology"],ans:2},
+  {id:88,sec:'B',lecture:26,text:"Which of the below is NOT an effective method for relieving stress?",opts:["Meditation","Sufficient rest","Smoking cigarettes","Exercise"],ans:2},
+  {id:89,sec:'B',lecture:26,text:"'Performing exercise' best fits into which one of the below categories?",opts:["Important & Urgent","Important but Not Urgent","Not Important but Urgent","Not Important & Not Urgent"],ans:1},
+  {id:90,sec:'B',lecture:26,text:"'Mindless web-browsing' best fits into which one of the below categories?",opts:["Important & Urgent","Important but Not Urgent","Not Important but Urgent","Not Important & Not Urgent"],ans:3},
+  {id:91,sec:'B',lecture:27,text:"Which one of the following statements is false?",opts:["Physical exercise can increase creativity","Physical exercise can sharpen memory","Physical exercise can improve brain power","Physical exercise can change the color of the brain"],ans:3},
+  {id:92,sec:'B',lecture:27,text:"According to the Harvard School of Public Health, how much of a portioned plate should be filled with fruits and vegetables?",opts:["15%","25%","40%","50%"],ans:3},
+  {id:93,sec:'B',lecture:27,text:"According to the Harvard School of Public Health, how much of a portioned plate should be filled with healthy proteins?",opts:["15%","25%","40%","50%"],ans:1},
+  {id:94,sec:'B',lecture:29,text:"Which of the following does NOT directly benefit from financial planning?",opts:["Retirement","Purchasing a house","Exam technique","Emergencies"],ans:2},
+  {id:95,sec:'B',lecture:29,text:"Purchasing a smartphone is most likely to be which type of financial goal?",opts:["Short-term","Mid-term","Maximization","Strategic"],ans:0},
+  {id:96,sec:'B',lecture:29,text:"Which of the following is a fixed-voluntary cost?",opts:["Rent","Gym membership","Medicine","Food"],ans:1},
+  {id:97,sec:'B',lecture:29,text:"For a person with secure employment, how many months of basic expenses should be saved in an emergency fund?",opts:["At least 1 months' worth","At least 2 months' worth","At least 3 months' worth","At least 12 months' worth"],ans:2},
+  {id:98,sec:'B',lecture:29,text:"Which of the following is NOT an important component of financial planning?",opts:["Using compound interest","Investing in an orient fund","Calculating your budget","Creating an emergency fund"],ans:1},
+  {id:99,sec:'B',lecture:30,text:"Mangesh Mhaskar scored 97% on the 10th standard board exams. But what caused his downfall?",opts:["Lack of finance","Illness","A lack of support from his parents","Bad company"],ans:3},
+  {id:100,sec:'B',lecture:30,text:"How can we create a good environment for ourselves?",opts:["Read good books","Watch popular shows","Keep negative thoughts","Eat more food"],ans:0},
+
+  // ── SECTION C: MCQ Apply (Q101–130, 2 best / 1 secondary) ──
+  {id:101,sec:'C',lecture:16,text:"Rajesh has cleared his 12th standard exam with good grades. He is confused about the selection of his degree course. What should Rajesh do?",opts:["He should seek some advice in choosing a course that is relevant to his prospective career choice.","He should select the course that is most popular with his friends and other students."],ans:0,secondary:1},
+  {id:102,sec:'C',lecture:16,text:"Amit is a very bright student. He wants to be an engineer and get entry to the best company in his field. He has just got admission into the engineering institute that he desired, now what should Amit follow:",opts:["Amit should try to settle down into the new atmosphere, observe what others are doing and should follow in their footsteps.","Amit should define some short-term goals that will help get entry into the company of his choice."],ans:1,secondary:0},
+  {id:103,sec:'C',lecture:16,text:"Anjali is an average student. She has set a clear long-term goal to join the Civil Services. With the help from experts, she has set some short-term goals too, but she is struggling to achieve them. What should she do?",opts:["Anjali should change her long-term goal to something easier.","Anjali should create a daily routine that will help her achieve her short-term targets."],ans:1,secondary:0},
+  {id:104,sec:'C',lecture:16,text:'What can we learn from the following Alexander-The-Great quote: "Bury my body, do not build any monument, keep my hands outside so that the world knows the person who won the world had nothing in his hands when dying"?',opts:["Great people often die unhappy.","Material gain and reputation are not the most important thing in life."],ans:1,secondary:0},
+  {id:105,sec:'C',lecture:17,text:"Neel's friend encourages him to smoke some cigarettes because he believes that 'there is no harm in trying it once'. Why should Neel decline his friend's offer to smoke?",opts:["Smoking is harmful and can become addictive.","Smoking can be an unpleasant experience for beginners."],ans:0,secondary:1},
+  {id:106,sec:'C',lecture:17,text:"Devashish Ghosh, an intelligent youth, had great career prospects. But he became addicted to various drugs. The Defense Ministry found him in possession of drugs and blacklisted him. This ruined his career. How do you think Devashish Ghosh could have avoided this situation?",opts:["Devashish should have only used drugs occasionally during his vacation time.","Devashish should not have taken the risk. He should have avoided the use of drugs completely."],ans:1,secondary:0},
+  {id:107,sec:'C',lecture:17,text:"Sejal often gets stressed because she has financial difficulties. She is also addicted to cigarettes, smoking 15 cigarettes daily. She refuses to stop smoking because she says that it helps control her stress. Do you think it is beneficial for her to stop smoking?",opts:["Yes. Spending money on cigarettes is wasting her money. If she can be strong and give up her addiction, then this will be more beneficial in the long term.","No. By trying to stop smoking she will get more stressed. Which will only make her situation worse."],ans:0,secondary:1},
+  {id:108,sec:'C',lecture:18,text:"A charitable NGO is planning on building a school for the local orphans. During the discussion, one volunteer suggests installing air coolers into the school so that the students feel comfortable during the summer. Some other members disagree as it would mean increasing the fundraising target by 5%. What would you suggest?",opts:['"It will be worth the extra effort of fundraising so that the students feel more comfortable."','"We should only focus on the basic necessities needed to build the school."'],ans:0,secondary:1},
+  {id:109,sec:'C',lecture:18,text:"The local community has organised a one-day cleanup event. The local media has been asked to attend but has not confirmed their attendance. The minister is considering whether to attend the event or not. What would you advise him?",opts:["You should request the organisers to postpone the event until the media guarantees their attendance.","You should attend the event even if the media does not attend because it is a good cause."],ans:1,secondary:0},
+  {id:110,sec:'C',lecture:19,text:"Sanjay is part of a district football team. Today, Sanjay has been scheduled to play in the final match, but his back has started hurting in a way that affects his performance. What should he do?",opts:["Do not tell anyone and play the match even with the chance that your performance might get impacted.","Alert your coach about it, even if that means he may not let you play in the match. It is better to do what is best for the team."],ans:1,secondary:0},
+  {id:111,sec:'C',lecture:19,text:"Anmol has been given the responsibility to lead a new project for an IT company. One of his responsibilities is to hire new people into his team. Which approach do you think is the best to take?",opts:["Make a team with less diversity to help avoid conflicts and confusion.","Make a team with more diversity to increase innovation, different perspectives, and greater acceptance."],ans:1,secondary:0},
+  {id:112,sec:'C',lecture:19,text:'Which attribute of a good team player is emphasised in the quote, "Teamwork: simply stated, it is less me and more we."?',opts:["A good team player should be able to sacrifice his personal gains for the success of the team.","A good team player should be able to change his personality to fit in with the team."],ans:0,secondary:1},
+  {id:113,sec:'C',lecture:21,text:"What is the best way to describe the leadership concept 'Leading without Leading'?",opts:["Great leaders should delegate as much work as possible to free up their time for the most important things.","Great leaders can lead through a good example instead of a more commanding nature."],ans:1,secondary:0},
+  {id:114,sec:'C',lecture:21,text:'What leadership style best describes the following quotation: "As we look ahead into the next century, leaders will be those who empower others." [Bill Gates]',opts:["Delegative Leadership","Servant Leadership"],ans:1,secondary:0},
+  {id:115,sec:'C',lecture:21,text:"Jeff Garcia showed up every day to do the work - first one to practice, first one out the tunnel. Which of the following leadership style best represents the above description?",opts:["Lead by example","First in, is the first to win"],ans:0,secondary:1},
+  {id:116,sec:'C',lecture:23,text:"Manan is an intelligent college student. But he often gets late to class, and he rarely submits the assignments on time. His professor is new at his role and has not noticed Manan's absences. What should Manan do?",opts:["Manan can maintain his lifestyle but should also stay aware such that his grades do not suffer as a result.","He should become more punctual in his attendance and submissions."],ans:1,secondary:0},
+  {id:117,sec:'C',lecture:23,text:"What is the closest interpretation of the following quote: \"'Small things make perfection, but perfection is not a small thing\"?",opts:["Try to bring perfection into the small tasks of your day-to-day life. Perfection in small tasks drives our life to perfection.","Perfection is very important for your career. Bring perfection into your important tasks as a student or as a professional."],ans:0,secondary:1},
+  {id:118,sec:'C',lecture:23,text:"Archana is a software engineer. She likes to work on program designing and coding. But she does not like to do the supporting documentation work. She finds it unimportant as it is not normally used by anyone. It needs to be done to adhere to the general organization standards. What should Archana do?",opts:["Complete the documentation work by noting down only the biggest details. The supporting document feels unimportant and is unlikely to be used anyway.","Complete the documentation work sincerely. Follow the organization guidelines to specify the details. Even if it seems unimportant, she should be sincere in completing her work."],ans:1,secondary:0},
+  {id:119,sec:'C',lecture:24,text:'Every morning Steve Jobs asked himself: "If today was the last day of my life, would I want to do what I am about to do today?" Which statement best explains Jobs\' quote?',opts:["Jobs wanted to remind himself of what is most important in his life and to continue working in that direction.","Jobs wanted to focus more on achieving short term benefits instead of making long term investments."],ans:0,secondary:1},
+  {id:120,sec:'C',lecture:24,text:'"Death teaches about life." Which of the following statements best explains the importance of this quotation?',opts:["We should accept that everything has an ending point.","Realizing our life as finite can improve our productivity, clarity, and stability."],ans:1,secondary:0},
+  {id:121,sec:'C',lecture:25,text:"Anamika and Aditi are friends. But Aditi forgot to invite Anamika to her birthday celebration. Anamika felt upset that she was left out. A few weeks later, Anamika's birthday anniversary is now soon approaching, and she is planning her birthday celebration. What should Anamika do?",opts:["Invite Aditi to her birthday celebration. This will make Aditi realize her mistake and more likely to apologize.","Invite Aditi to her birthday celebration and bridge the gap in their friendship."],ans:1,secondary:0},
+  {id:122,sec:'C',lecture:25,text:"Due to poor exam results, Rahul's father scolded him in front of his friends. Rahul felt it was insulting and had an argument with his father in the evening. After the argument, Rahul felt even more disturbed. What advice would you give to Rahul?",opts:["Meet your father and say sorry to him. A gentle talk may inspire your father to realize that he should not have scolded you in front of your friends.","Meet your father and say sorry to him. Accept your fault and apologize for your improper behavior. Promise him that you will work harder for your studies from now onward."],ans:1,secondary:0},
+  {id:123,sec:'C',lecture:25,text:"Avinash stays in a hostel. Raj is his roommate. Raj is very notorious and has a habit of mocking everyone. After a few months, Raj stopped teasing Avinash. But Avinash has started to hate Raj because of his nature. What should Avinash do to feel more positive?",opts:["Change rooms and avoid speaking to Raj. That way he cannot ruin his mood.","Try and forgive Raj for his mocking nature. Focus on his positive qualities instead."],ans:1,secondary:0},
+  {id:124,sec:'C',lecture:25,text:"'Resentment is like drinking poison and then hoping it will kill your enemies.' - What is the most useful lesson to learn from this famous quote by Nelson Mandela?",opts:["Keeping bitter emotions for those who have hurt us will only prove to be self-destructive. So, we should learn to forgive others for our own peace of mind.","Keeping bitter emotions for your enemies is unlikely to inflict harm on them. It is better to act upon it instead."],ans:0,secondary:1},
+  {id:125,sec:'C',lecture:26,text:"Which of the following do you think is the most effective method to become more productive?",opts:["Create and follow a schedule while neglecting everything else.","Find your biggest priorities and ensure they are scheduled and completed."],ans:1,secondary:0},
+  {id:126,sec:'C',lecture:26,text:"Jatin has important exams approaching in three weeks. He would like to give some time for exercise. How would you suggest that he balances his time?",opts:["Jatin should schedule at least 30 minutes of exercising every morning before studying.","Jatin should commit to exercising only on the days when he finds spare time after completing his studies and other responsibilities."],ans:0,secondary:1},
+  {id:127,sec:'C',lecture:26,text:"Anil is currently learning to code while also working part-time as an IT consultant. He will drive to meet his client at 11 AM. The journey normally takes around 44 minutes. Anil is trying to decide how to fit this journey into his schedule. Which of the following options do you think is more appropriate?",opts:["Anil should leave home at 10:15 AM, so as not to potentially waste any time waiting around.","Anil should leave home at 10:05 AM, so to include buffer time into his schedule."],ans:1,secondary:0},
+  {id:128,sec:'C',lecture:27,text:"Anjali sleeps for 7 hours a night and wakes up a few hours later on Sunday. However, on Monday mornings, Anjali often feels more tired than usual. How do you think Anjali should adjust her sleep pattern?",opts:["Anjali should try to sleep extra early on Sunday night so that she feels well-rested on Monday morning.","Anjali should try to keep the same sleep schedule on weekdays and weekends so as not to disturb her body clock."],ans:1,secondary:0},
+  {id:129,sec:'C',lecture:29,text:"The monsoon season saw some serious flooding. The structure of your house has been significantly damaged because of excessive water exposure. The repair work will cost you ₹5 lakh. How should you go about financing the repair?",opts:["Check if your insurance covers water damage, make the necessary insurance claim and withdraw the balance from your emergency fund.","Check if your insurance covers water damage, make the necessary insurance claim and borrow the balance of the money from a bank."],ans:0,secondary:1},
+  {id:130,sec:'C',lecture:29,text:"After graduating, Shivani started working as a data scientist for the last 4 years. She has been earning ₹7 lakh rupees every year. Now that her 25th birthday is approaching, she is wondering about the best time to start a retirement fund. What financial plan will allow her to benefit the most?",opts:["Start investing into a retirement fund straight away to earn more money through compound interest.","For the next 5-7 years, she should keep her money free so she can spend it. She can then start a retirement fund afterwards."],ans:0,secondary:1},
+];
+
+const MARKS = { A: 1, B: 2, C: 2 };
+
+let userAnswers = new Array(130).fill(null);
+let currentQ = 0;
+let reviewFilter = 'all';
+
+function getMarks(q, chosenIdx) {
+  if (chosenIdx === null) return 0;
+  if (q.sec === 'C') {
+    if (chosenIdx === q.ans) return 2;
+    if (chosenIdx === q.secondary) return 1;
+    return 0;
+  }
+  return chosenIdx === q.ans ? MARKS[q.sec] : 0;
+}
+
+function sectionLabel(s) {
+  return s === 'A' ? 'Section A' : s === 'B' ? 'Section B' : 'Section C';
+}
+
+function startExam() {
+  userAnswers = new Array(130).fill(null);
+  currentQ = 0;
+  showScreen('exam');
+  renderDots();
+  renderQuestion();
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function renderDots() {
+  const panel = document.getElementById('dotsPanel');
+  panel.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === currentQ ? ' current' : (userAnswers[i] !== null ? ' answered' : ''));
+    d.textContent = i + 1;
+    d.onclick = () => { currentQ = i; renderQuestion(); renderDots(); };
+    panel.appendChild(d);
+  });
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const qa = document.getElementById('questionArea');
+
+  document.getElementById('headerQ').textContent = 'Q' + q.id;
+  document.getElementById('headerSection').textContent = sectionLabel(q.sec);
+
+  const answered = userAnswers.filter(a => a !== null).length;
+  document.getElementById('progressFill').style.width = ((answered / 130) * 100).toFixed(1) + '%';
+  document.getElementById('progressLabel').textContent = answered + ' / 130';
+
+  const opts = q.opts.map((opt, i) => {
+    const sel = userAnswers[currentQ] === i;
+    return `<button class="option-btn${sel?' selected':''}" onclick="selectAnswer(${i})" ${userAnswers[currentQ]!==null?'disabled':''}>
+      <span class="option-indicator">${String.fromCharCode(65+i)}</span>
+      <span>${opt}</span>
+    </button>`;
+  }).join('');
+
+  const markHint = q.sec === 'C' ? '2 / 1 mark' : MARKS[q.sec] + ' mark';
+
+  qa.innerHTML = `
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-num">Q${q.id}</span>
+        <span class="q-lecture">Lecture ${q.lecture}</span>
+        <span class="q-marks">${markHint}</span>
+      </div>
+      <div class="q-text">${q.text}</div>
+      <div class="options-list">${opts}</div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-nav" onclick="navigate(-1)" ${currentQ===0?'disabled':''}>← Prev</button>
+      ${currentQ === 129
+        ? `<button class="btn-finish" onclick="confirmSubmit()">Submit Exam</button>`
+        : `<button class="btn-nav" onclick="navigate(1)">Next →</button>`
+      }
+    </div>
+  `;
+}
+
+function selectAnswer(idx) {
+  if (userAnswers[currentQ] !== null) return;
+  userAnswers[currentQ] = idx;
+  renderQuestion();
+  renderDots();
+  if (currentQ < 129) {
+    setTimeout(() => { currentQ++; renderQuestion(); renderDots(); }, 350);
+  }
+}
+
+function navigate(dir) {
+  currentQ = Math.max(0, Math.min(129, currentQ + dir));
+  renderQuestion();
+  renderDots();
+}
+
+function confirmSubmit() {
+  const unanswered = userAnswers.filter(a => a === null).length;
+  if (unanswered > 0) {
+    if (!confirm(`You have ${unanswered} unanswered question${unanswered>1?'s':''}. Submit anyway?`)) return;
+  }
+  submitExam();
+}
+
+function submitExam() {
+  showScreen('results');
+  computeResults();
+}
+
+function computeResults() {
+  let totalMarks = 0, correct = 0, wrong = 0, skipped = 0;
+  let aMarks = 0, bMarks = 0, cMarks = 0;
+
+  QUESTIONS.forEach((q, i) => {
+    const chosen = userAnswers[i];
+    const m = getMarks(q, chosen);
+    totalMarks += m;
+    if (q.sec === 'A') aMarks += m;
+    else if (q.sec === 'B') bMarks += m;
+    else cMarks += m;
+
+    if (chosen === null) skipped++;
+    else if (q.sec === 'C') {
+      if (chosen === q.ans) correct++;
+      else if (chosen === q.secondary) { /* partial */ }
+      else wrong++;
+    } else {
+      if (chosen === q.ans) correct++;
+      else wrong++;
+    }
+  });
+
+  const pct = Math.round((totalMarks / 250) * 100);
+
+  let grade, msg;
+  if (pct >= 85) { grade = 'Excellent'; msg = 'Outstanding performance!'; }
+  else if (pct >= 70) { grade = 'Good'; msg = 'Well done, keep it up.'; }
+  else if (pct >= 55) { grade = 'Satisfactory'; msg = 'Good effort, review weak areas.'; }
+  else if (pct >= 40) { grade = 'Needs work'; msg = 'More practice needed.'; }
+  else { grade = 'Keep trying'; msg = 'Review the lectures and try again.'; }
+
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('resultsGrade').textContent = grade;
+  document.getElementById('resultsMsg').textContent = msg;
+  document.getElementById('sumCorrect').textContent = correct;
+  document.getElementById('sumWrong').textContent = wrong;
+  document.getElementById('sumSkipped').textContent = skipped;
+  document.getElementById('sumTotal').textContent = totalMarks + ' / 250';
+
+  // Animate ring
+  const circumference = 364;
+  const offset = circumference - (pct / 100) * circumference;
+  setTimeout(() => {
+    document.getElementById('ringCircle').style.strokeDashoffset = offset;
+  }, 100);
+
+  // Section bars
+  const aMax = 50, bMax = 100, cMax = 100;
+  document.getElementById('bdBarA').style.width = Math.round((aMarks / aMax) * 100) + '%';
+  document.getElementById('bdBarB').style.width = Math.round((bMarks / bMax) * 100) + '%';
+  document.getElementById('bdBarC').style.width = Math.round((cMarks / cMax) * 100) + '%';
+  document.getElementById('bdScoreA').textContent = aMarks + ' / ' + aMax;
+  document.getElementById('bdScoreB').textContent = bMarks + ' / ' + bMax;
+  document.getElementById('bdScoreC').textContent = cMarks + ' / ' + cMax;
+
+  renderReview('all');
+}
+
+function setFilter(f, btn) {
+  reviewFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderReview(f);
+}
+
+function renderReview(filter) {
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+
+  QUESTIONS.forEach((q, i) => {
+    const chosen = userAnswers[i];
+    const m = getMarks(q, chosen);
+    let status;
+
+    if (chosen === null) status = 'skipped';
+    else if (q.sec === 'C') {
+      if (chosen === q.ans) status = 'correct';
+      else if (chosen === q.secondary) status = 'partial';
+      else status = 'wrong';
+    } else {
+      status = chosen === q.ans ? 'correct' : 'wrong';
+    }
+
+    if (filter === 'correct' && status !== 'correct') return;
+    if (filter === 'wrong' && status !== 'wrong' && status !== 'partial') return;
+    if (filter === 'skipped' && status !== 'skipped') return;
+
+    const badgeClass = status === 'correct' ? 'c' : status === 'wrong' || status === 'partial' ? 'w' : 's';
+    const badgeText = status === 'correct' ? `+${m}` : status === 'partial' ? `+${m} partial` : status === 'wrong' ? '✗ wrong' : '— skipped';
+
+    let ansInfo = '';
+    if (chosen !== null && chosen !== q.ans) {
+      ansInfo = `<span class="ri-ans-wrong">Your: ${q.opts[chosen]}</span>`;
+    }
+    if (status !== 'correct') {
+      ansInfo += `<span class="ri-ans-correct">Correct: ${q.opts[q.ans]}</span>`;
+    }
+
+    const itemClass = status === 'correct' ? 'correct-item' : status === 'wrong' || status === 'partial' ? 'wrong-item' : 'skipped-item';
+
+    list.innerHTML += `
+      <div class="review-item ${itemClass}">
+        <div class="ri-header">
+          <div class="ri-q"><strong>Q${q.id} · L${q.lecture}</strong> — ${q.text}</div>
+          <span class="ri-badge ${badgeClass}">${badgeText}</span>
+        </div>
+        <div class="ri-answers">${ansInfo || '<span style="color:var(--accent)">Correct ✓</span>'}</div>
+      </div>
+    `;
+  });
+
+  if (list.innerHTML === '') {
+    list.innerHTML = '<p style="color:var(--muted);font-size:0.9rem;padding:1rem 0;">No questions in this category.</p>';
+  }
+}
+
+function scrollToReview() {
+  document.querySelector('.review-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
